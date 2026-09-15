@@ -1,0 +1,53 @@
+body{
+        font-family: Arial, Helvetica, sans-serif;
+        color: black;
+        background-color: rgb(189, 122, 233);
+        text-align: center;
+        padding: 20px;
+    h1{
+        color: black;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+    input {
+        padding: 10px;
+        width: 250px;
+    }
+    button {
+       padding: 10px 15px;
+       margin: 5px;
+       cursor: pointer;
+       border: none;
+       border-radius: 5px;
+    }
+    #agregarBtn {
+       background-color: #77ca7a;
+       color: white;
+    }
+
+    #borrarTodoBtn {
+       background-color: #e24f4f;
+       color: white;
+    }
+    ul {
+       list-style: none;
+       padding: 0;
+    }
+
+li {
+       background: #fff;
+       margin: 5px auto;
+       padding: 10px;
+       width: 300px;
+       display: flex;
+       justify-content: space-between;
+       border-radius: 5px;
+    }
+    .eliminarBtn {
+       background-color: #ff9800;
+       color: white;
+       border: none;
+       padding: 5px;
+       border-radius: 3px;
+       cursor: pointer;
+    }
+}
