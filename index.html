@@ -13,7 +13,13 @@
              <button id="borrarTodoBtn">Borrar lista</button>
 
              <ul id="listaTareas"></ul>  
-             <script src="script.js"></script>                    
+             <script src="script.js"></script> 
+
+            <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
         </BODY>
         </HTML>
 
