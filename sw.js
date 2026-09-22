@@ -1,11 +1,11 @@
 const CACHE = 'mi-app-v1';
 const ARCHIVOS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/icono-192.png',
-  '/icono-512.png'
+  '/Agenda-de-Tareas/',
+  '/Agenda-de-Tareas/index.html',
+  '/Agenda-de-Tareas/style.css',
+  '/Agenda-de-Tareas/script.js',
+  '/Agenda-de-Tareas/icono-192.png',
+  '/Agenda-de-Tareas/icono-512.png'
 ];
 
 self.addEventListener('install', (e) => {
