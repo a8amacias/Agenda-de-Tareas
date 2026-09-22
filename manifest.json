@@ -1,0 +1,21 @@
+{
+  "name": "Mi Agenda de Tareas",
+  "short_name": "Agenda",
+  "description": "Una agenda de tareas para tener tus días mas organizados",
+  "start_url": "https://a8amacias.github.io/Agenda-de-Tareas/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "Agenda-de-Tareas/icono-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "Agenda-de-Tareas/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
