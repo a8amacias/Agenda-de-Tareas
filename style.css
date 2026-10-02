@@ -1,53 +1,75 @@
-body{
-        font-family: Arial, Helvetica, sans-serif;
-        color: black;
-        background-color: rgb(189, 122, 233);
-        text-align: center;
-        padding: 20%;
-    h1{
-        color: black;
-        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    }
-    input {
-        padding: 10%;
-        width: 250%;
-    }
-    button {
-       padding: 10% 15%;
-       margin: 5%;
-       cursor: pointer;
-       border: none;
-       border-radius: 5%;
-    }
-    #agregarBtn {
-       background-color: #77ca7a;
-       color: white;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  background-color: rgb(189, 122, 233);
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
 
-    #borrarTodoBtn {
-       background-color: #e24f4f;
-       color: white;
-    }
-    ul {
-       list-style: none;
-       padding: 0;
-    }
+h1 {
+  color: black;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(28px, 6vw, 55px);
+}
+
+input {
+  padding: 15px;
+  width: 80%;
+  max-width: 400px;
+  font-size: clamp(18px, 4vw, 24px);
+  border: none;
+  border-radius: 25px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 15px 25px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 25px;
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: bold;
+}
+
+#agregarBtn {
+  background-color: #77ca7a;
+  color: white;
+}
+
+#borrarTodoBtn {
+  background-color: #e24f4f;
+  color: white;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+}
 
 li {
-       background: #fff;
-       margin: 5% auto;
-       padding: 10%;
-       width: 300%;
-       display: flex;
-       justify-content: space-between;
-       border-radius: 5%;
-    }
-    .eliminarBtn {
-       background-color: #ff9800;
-       color: white;
-       border: none;
-       padding: 5%;
-       border-radius: 3%;
-       cursor: pointer;
-    }
+  background: #fff;
+  margin: 10px auto;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  font-size: clamp(18px, 4vw, 22px);
+  word-break: break-word;
+}
+
+.eliminarBtn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: clamp(14px, 3vw, 18px);
 }
