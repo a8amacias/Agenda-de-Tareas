@@ -1,19 +1,29 @@
-const CACHE = 'mi-app-v1';
-const ARCHIVOS = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './icono-192.png',
-  './icono-512.png'
-];
+const CACHE = 'mi-app-v2';  
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARCHIVOS)));
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => Promise.all(
+      keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))
+    ))
+  );
 });
 
 self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+
+  
+  if (url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
+  
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
+    caches.match(e.request).then((r) => r || fetch(e.request))
   );
 });
+
