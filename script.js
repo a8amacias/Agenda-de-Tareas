@@ -1,14 +1,3 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyD_ZFW_XtDmRidIt4Q_GEhT2OsMUR_UtSA",
-  authDomain: "agenda-de-tareas-f6d01.firebaseapp.com",
-  projectId: "agenda-de-tareas-f6d01",
-  storageBucket: "agenda-de-tareas-f6d01.firebasestorage.app",
-  messagingSenderId: "795424230539",
-  appId: "1:795424230539:web:e1ec344db3a9697632d88e"
-
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 const auth = firebase.auth();
 
 // Verificar si hay sesión activa
@@ -21,7 +10,6 @@ auth.onAuthStateChanged((user) => {
     cargarTareas(user.uid);
   }
 });
-
 
 // Referencias a los elementos
 const tareaInput = document.getElementById("tareaInput");
@@ -55,7 +43,7 @@ agregarBtn.addEventListener("click", async() => {
      await db.collection("tareas").add({
             titulo: texto,
             completada: false,
-            creadaEn: firebase.firestore.FieldValue.serverTimestamp()
+            creadaEn: firebase.firestore.FieldValue.serverTimestamp(),
        uid: user.uid
     });
   tareaInput.value = "";
