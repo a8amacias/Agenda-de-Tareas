@@ -51,7 +51,7 @@ function crearTarea(texto, id) {
 agregarBtn.addEventListener("click", async() => {
   const texto = tareaInput.value.trim();
   if (texto !== "") {
-    const user = auth.CurrentUser;
+    const user = auth.currentUser;
      await db.collection("tareas").add({
             titulo: texto,
             completada: false,
@@ -73,8 +73,8 @@ borrarTodoBtn.addEventListener("click", async() => {
   // Leer tareas en tiempo real desde Firestore
   function cargarTareas(uid){
     db.collection("tareas")
-    .where("uid"; "=="; uid)
-    .orderby("creadaEn"; "dec")
+    .where("uid", "==", uid)
+    .orderby("creadaEn", "desc")
     onSnapshot((snapshot) => {      
       listaTareas.innerHTML = "";
       snapshot.forEach((doc) => {
@@ -83,3 +83,7 @@ borrarTodoBtn.addEventListener("click", async() => {
        });
    });
 }
+document.getElementById("btnSalir").addEventListener("click", () => {
+  auth.signOut();
+  window.location.href = "login.html";
+});
