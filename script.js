@@ -9,6 +9,19 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Verificar si hay sesión activa
+auth.onAuthStateChanged((user) => {
+  if (!user) {
+    // No hay sesión, se manda al login
+    window.location.href = "login.html";
+  } else {
+    // Si hay sesión, carga solo las tareas de este usuario
+    cargarTareas(user.uid);
+  }
+});
+
 
 // Referencias a los elementos
 const tareaInput = document.getElementById("tareaInput");
@@ -38,10 +51,12 @@ function crearTarea(texto, id) {
 agregarBtn.addEventListener("click", async() => {
   const texto = tareaInput.value.trim();
   if (texto !== "") {
+    const user = auth.CurrentUser;
      await db.collection("tareas").add({
             titulo: texto,
             completada: false,
             creadaEn: firebase.firestore.FieldValue.serverTimestamp()
+       uid: user.uid
     });
   tareaInput.value = "";
   }
@@ -56,10 +71,15 @@ borrarTodoBtn.addEventListener("click", async() => {
    });
 
   // Leer tareas en tiempo real desde Firestore
-db.collection("tareas").onSnapshot((snapshot) => {
-    listaTareas.innerHTML = "";
-    snapshot.forEach((doc) => {
-        const tarea = doc.data();
-        crearTarea(tarea.titulo, doc.id);
-    });
-});
+  function cargarTareas(uid){
+    db.collection("tareas")
+    .where("uid"; "=="; uid)
+    .orderby("creadaEn"; "dec")
+    onSnapshot((snapshot) => {      
+      listaTareas.innerHTML = "";
+      snapshot.forEach((doc) => {
+         const tarea = doc.data();
+         crearTarea(tarea.titulo, doc.id);
+       });
+   });
+}
