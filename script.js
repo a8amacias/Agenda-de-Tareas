@@ -62,7 +62,7 @@ borrarTodoBtn.addEventListener("click", async() => {
   function cargarTareas(uid){
     db.collection("tareas")
     .where("uid", "==", uid)
-    .orderby("creadaEn", "desc")
+    .orderBy("creadaEn", "desc")
     onSnapshot((snapshot) => {      
       listaTareas.innerHTML = "";
       snapshot.forEach((doc) => {
