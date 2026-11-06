@@ -71,7 +71,11 @@ borrarTodoBtn.addEventListener("click", async() => {
        });
    });
 }
-document.getElementById("btnSalir").addEventListener("click", () => {
-  auth.signOut();
+document.getElementById("btnSalir").addEventListener("click", async () => {
+  try{
+  await auth.signOut();
   window.location.href = "login.html";
+  } catch (error) {
+    alert("Error al cerrar sesión: " + error.message);
+  }
 });
