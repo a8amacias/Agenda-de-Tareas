@@ -1,3 +1,4 @@
+const auth = firebase.auth();
 const firebaseConfig = {
   apiKey: "AIzaSyD_ZFW_XtDmRidIt4Q_GEhT2OsMUR_UtSA",
   authDomain: "agenda-de-tareas-f6d01.firebaseapp.com",
@@ -8,5 +9,4 @@ const firebaseConfig = {
 
 };
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const db = firebase.firestore();
