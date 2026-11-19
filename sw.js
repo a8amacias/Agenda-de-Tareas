@@ -1,4 +1,4 @@
-const CACHE = 'mi-app-v2';  
+const CACHE = 'mi-app-v3';  
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
