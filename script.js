@@ -1,5 +1,5 @@
+console.log("script.js cargado");
 const auth = firebase.auth();
-
 // Verificar si hay sesión activa
 auth.onAuthStateChanged((user) => {
   if (!user) {
@@ -79,3 +79,4 @@ document.getElementById("btnSalir").addEventListener("click", async () => {
     alert("Error al cerrar sesión: " + error.message);
   }
 });
+console.log("script.js terminó de cargar");
