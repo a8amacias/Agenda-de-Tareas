@@ -3,20 +3,20 @@ const tareaInput = document.getElementById("tareaInput");
 const agregarBtn = document.getElementById("agregarBtn");
 const borrarTodoBtn = document.getElementById("borrarTodoBtn");
 const listaTareas = document.getElementById("listaTareas");
+const btnSalir = document.getElementById("btnSalir");
 
 console.log("script.js cargado");
+
 // Verificar si hay sesión activa
 auth.onAuthStateChanged((user) => {
   if (!user) {
-    // No hay sesión, se manda al login
     window.location.href = "login.html";
   } else {
-    // Si hay sesión, carga solo las tareas de este usuario
     cargarTareas(user.uid);
   }
 });
 
-//Crear tarea con botón eliminar
+// Crear tarea con botón eliminar
 function crearTarea(texto, id) {
   const li = document.createElement("li");
   li.textContent = texto;
@@ -25,8 +25,10 @@ function crearTarea(texto, id) {
   eliminarBtn.textContent = "Eliminar";
   eliminarBtn.classList.add("eliminarBtn");
   eliminarBtn.addEventListener("click", async () => {
-    if (id) {
-        await db.collection("tareas").doc(id).delete();
+    try {
+      await db.collection("tareas").doc(id).delete();
+    } catch (error) {
+      alert("Error al eliminar: " + error.message);
     }
   });
 
@@ -34,47 +36,78 @@ function crearTarea(texto, id) {
   listaTareas.appendChild(li);
 }
 
-//Agregar tarea (guarda los datos en la nube)
-agregarBtn.addEventListener("click", async() => {
+// Agregar tarea
+agregarBtn.addEventListener("click", async () => {
   const texto = tareaInput.value.trim();
-  if (texto !== "") {
-    const user = auth.currentUser;
-     await db.collection("tareas").add({
-            titulo: texto,
-            completada: false,
-            creadaEn: firebase.firestore.FieldValue.serverTimestamp(),
-       uid: user.uid
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("No hay sesión activa.");
+    return;
+  }
+  if (texto === "") return;
+
+  try {
+    await db.collection("tareas").add({
+      titulo: texto,
+      completada: false,
+      creadaEn: firebase.firestore.FieldValue.serverTimestamp(),
+      uid: user.uid
     });
-  tareaInput.value = "";
+    tareaInput.value = "";
+  } catch (error) {
+    alert("Error al agregar: " + error.message);
   }
 });
 
-//Borrar toda la lista (borra todos los documentos)
-borrarTodoBtn.addEventListener("click", async() => {
- const snapshot = await db.collection("tareas").get();
-    snapshot.forEach(async (doc) => {
-        await db.collection("tareas").doc(doc.id).delete();
-       });
-   });
+// Borrar toda la lista (solo las del usuario)
+borrarTodoBtn.addEventListener("click", async () => {
+  const user = auth.currentUser;
+  if (!user) return;
 
-  // Leer tareas en tiempo real desde Firestore
-  function cargarTareas(uid){
-    db.collection("tareas")
+  try {
+    const snapshot = await db.collection("tareas").where("uid", "==", user.uid).get();
+    await Promise.all(snapshot.docs.map((doc) => doc.ref.delete()));
+  } catch (error) {
+    alert("Error al borrar: " + error.message);
+  }
+});
+
+// Leer tareas en tiempo real
+function cargarTareas(uid) {
+  db.collection("tareas")
     .where("uid", "==", uid)
-    .orderBy("creadaEn", "desc")
-    .onSnapshot((snapshot) => {      
-      listaTareas.innerHTML = "";
-      snapshot.forEach((doc) => {
-         const tarea = doc.data();
-         crearTarea(tarea.titulo, doc.id);
-       });
-   });
-document.getElementById("btnSalir").addEventListener("click", async () => {
-  try{
-  await auth.signOut();
-  window.location.href = "login.html";
+    .onSnapshot(
+      (snapshot) => {
+        const tareas = [];
+        snapshot.forEach((doc) => {
+          tareas.push({ id: doc.id, ...doc.data() });
+        });
+
+        tareas.sort((a, b) => {
+          const fa = a.creadaEn ? a.creadaEn.seconds : 0;
+          const fb = b.creadaEn ? b.creadaEn.seconds : 0;
+          return fb - fa;
+        });
+
+        listaTareas.innerHTML = "";
+        tareas.forEach((t) => crearTarea(t.titulo, t.id));
+      },
+      (error) => {
+        console.error("Error al cargar tareas:", error);
+        alert("Error al cargar tareas: " + error.message);
+      }
+    );
+}
+
+// Cerrar sesión
+btnSalir.addEventListener("click", async () => {
+  try {
+    await auth.signOut();
+    window.location.href = "login.html";
   } catch (error) {
     alert("Error al cerrar sesión: " + error.message);
   }
 });
+
 console.log("script.js terminó de cargar");
