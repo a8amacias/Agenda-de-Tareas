@@ -1,5 +1,10 @@
+// Referencias a los elementos
+const tareaInput = document.getElementById("tareaInput");
+const agregarBtn = document.getElementById("agregarBtn");
+const borrarTodoBtn = document.getElementById("borrarTodoBtn");
+const listaTareas = document.getElementById("listaTareas");
+
 console.log("script.js cargado");
-const auth = firebase.auth();
 // Verificar si hay sesión activa
 auth.onAuthStateChanged((user) => {
   if (!user) {
@@ -10,12 +15,6 @@ auth.onAuthStateChanged((user) => {
     cargarTareas(user.uid);
   }
 });
-
-// Referencias a los elementos
-const tareaInput = document.getElementById("tareaInput");
-const agregarBtn = document.getElementById("agregarBtn");
-const borrarTodoBtn = document.getElementById("borrarTodoBtn");
-const listaTareas = document.getElementById("listaTareas");
 
 //Crear tarea con botón eliminar
 function crearTarea(texto, id) {
@@ -70,7 +69,6 @@ borrarTodoBtn.addEventListener("click", async() => {
          crearTarea(tarea.titulo, doc.id);
        });
    });
-}
 document.getElementById("btnSalir").addEventListener("click", async () => {
   try{
   await auth.signOut();
